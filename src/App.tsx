@@ -164,6 +164,34 @@ const App: React.FC = () => {
       return;
     }
 
+    // ファイル名を設定（YYYY_MMDD_PCS形式）
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    const fileName = `${year}_${month}${day}_PCS`;
+
+    // 元のタイトルを保存
+    const originalTitle = document.title;
+
+    // タイトルを変更（PDFファイル名として使用される）
+    document.title = fileName;
+
+    // 印刷イベントのリスナーを設定
+    const handleBeforePrint = () => {
+      document.title = fileName;
+    };
+
+    const handleAfterPrint = () => {
+      // 印刷後に元のタイトルに戻す
+      document.title = originalTitle;
+      window.removeEventListener("beforeprint", handleBeforePrint);
+      window.removeEventListener("afterprint", handleAfterPrint);
+    };
+
+    window.addEventListener("beforeprint", handleBeforePrint);
+    window.addEventListener("afterprint", handleAfterPrint);
+
     // すべてのバリデーションを通過したらPDF出力
     window.print();
   };
@@ -322,7 +350,12 @@ const App: React.FC = () => {
                   <textarea
                     value={e}
                     onChange={(ev) => handleEngineChange(i, ev.target.value)}
-                    className="w-full h-full resize-none border-none text-[11.5px] font-bold text-center leading-[1.25] focus:outline-none bg-transparent pt-[2.5mm]"
+                    className="w-full h-full resize-none border-none text-[11.5px] font-bold text-center focus:outline-none bg-transparent"
+                    style={{
+                      lineHeight: "16mm",
+                      paddingTop: 0,
+                      paddingBottom: 0,
+                    }}
                     spellCheck={false}
                   />
                 </div>
