@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ナイトモードを無効化し、常にライトモードで表示 */
+:root {
+  color-scheme: light;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  color-scheme: light;
+  color: #000000;
+}
+
+/* すべてのテキスト要素を明示的に黒色に */
+* {
+  color: inherit;
+}
