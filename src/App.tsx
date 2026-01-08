@@ -25,7 +25,7 @@ const App: React.FC = () => {
     []
   );
 
-  // ローカルストレージからデータを読み込む
+  // ローカルストレージからデータを読み込める
   const loadDataFromStorage = (): SheetData | null => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
