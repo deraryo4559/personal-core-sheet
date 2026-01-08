@@ -352,10 +352,15 @@ const App: React.FC = () => {
                     onChange={(ev) => handleEngineChange(i, ev.target.value)}
                     className="w-full h-full resize-none border-none text-[11.5px] font-bold text-center focus:outline-none bg-transparent"
                     style={{
-                      lineHeight: "16mm",
-                      paddingTop: 0,
-                      paddingBottom: 0,
+                      lineHeight: "1.4",
+                      paddingTop: "4mm",
+                      paddingBottom: "4mm",
+                      whiteSpace: "pre-wrap",
+                      wordWrap: "break-word",
+                      overflowWrap: "break-word",
+                      boxSizing: "border-box",
                     }}
+                    wrap="soft"
                     spellCheck={false}
                   />
                 </div>
