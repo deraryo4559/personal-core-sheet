@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useRef } from "react";
 import { Printer } from "lucide-react";
 
 type Episode = { from: string; text: string };
@@ -112,6 +112,15 @@ const App: React.FC = () => {
     } else {
       return "7.5px";
     }
+  };
+
+  // テキストの幅を測定する関数
+  const measureTextWidth = (text: string, fontSize: string = "10.5px", fontFamily: string = "Noto Sans JP"): number => {
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+    if (!context) return text.length * 7; // フォールバック
+    context.font = `bold ${fontSize} ${fontFamily}`;
+    return context.measureText(text).width;
   };
 
   // PDF出力前のバリデーション
@@ -415,9 +424,12 @@ const App: React.FC = () => {
                     onChange={(e) =>
                       handleEpisodeChange(i, "from", e.target.value)
                     }
-                    className={`flex-1 text-left focus:outline-none bg-transparent border-b pb-[0.6mm] ${
+                    className={`inline-block text-left focus:outline-none bg-transparent border-b pb-[0.6mm] min-w-[8px] ${
                       ep.from.length > 8 ? "border-red-500" : "border-black/40"
                     }`}
+                    style={{
+                      width: `${Math.max(8, measureTextWidth(ep.from || " ", "10.5px") + 4)}px`
+                    }}
                     spellCheck={false}
                   />
                   <span>】</span>
